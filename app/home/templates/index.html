@@ -1,0 +1,184 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-4 col-4">
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">{{msg}}</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col">
+              <form action="/predict" method = "POST" enctype = "multipart/form-data">
+                <div class="row">
+                  <div class="col-4 form-group">
+                    <input type="file" name="image" class="form-control form-control-alternative" id="image" placeholder="" required>
+                  </div>
+                  <div class="col-4 input-group-prepend">
+                    <select class="form-control" name="trainedData" required> 
+                        <option value="1">Arabic trained data</option>
+                        <option value="2">SII trained data</option>
+                        <option value="3">Both</option>
+                    </select>
+                 </div>
+                 <div class="text-center">
+                  <button type="submit" class="btn btn-default my-4">Predict</button>
+              </div>
+                </div>
+              </form>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page content -->
+    {% if trained_data %}
+    <div class="container-fluid mt--6">
+      {% if trained_data == '1' %}
+        <div class="col-xl-12">
+          <div class="card bg-default">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-light text-uppercase ls-1 mb-1">Image</h6>
+                  <img src="/static/images/image.png" class="img-fluid" alt="image">
+                </div>
+                {% if trained_data in ['1', '3'] %}
+                  <div class="col-xl-6">
+                    <div class="card">
+                      <div class="card-header bg-transparent">
+                        <div class="row align-items-center">
+                          <div class="col">
+                            <h6 class="text-uppercase text-muted ls-1 mb-1">Ara Trained Data Result</h6>
+                            <textarea rows="8" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="">
+                              {% for line in text_ara %}
+                                  {{ line.strip() }}
+                              {% endfor %}
+                            </textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+      {% if trained_data == '2' %}
+        <div class="col-xl-12">
+          <div class="card bg-default">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-light text-uppercase ls-1 mb-1">Image</h6>
+                  <img src="/static/images/image.png" class="img-fluid" alt="image">
+                </div>
+                {% if trained_data in ['2', '3'] %}
+                  <div class="col-xl-6">
+                    <div class="card">
+                      <div class="card-header bg-transparent">
+                        <div class="row align-items-center">
+                          <div class="col">
+                            <h6 class="text-uppercase text-muted ls-1 mb-1">Ara Trained Data Result</h6>
+                            <textarea rows="8" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="">
+                              {% for line in text_sii %}
+                                  {{ line.strip() }}
+                              {% endfor %}
+                            </textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}  
+        {% if trained_data == '3' %}
+        <div class="col-xl-12">
+          <div class="card bg-default">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-light text-uppercase ls-1 mb-1">Image</h6>
+                  <img src="/static/images/image.png" class="img-fluid" alt="image">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="row">
+        <div class="col-xl-6">
+          <div class="card">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-uppercase text-muted ls-1 mb-1">Ara Trained Data Result</h6>
+                  <textarea rows="8" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="">
+                    {% for line in text_ara %}
+                        {{ line.strip() }}
+                    {% endfor %}
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6">
+          <div class="card">
+            <div class="card-header bg-transparent">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h6 class="text-uppercase text-muted ls-1 mb-1">SII Trained Data Result</h6>
+                  <textarea rows="8" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="">
+                    {% for line in text_sii %}
+                        {{ line.strip() }}
+                    {% endfor %}
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+            </div>
+          </div>
+        </div>
+        </div>
+        {% endif %}
+
+      {% include "includes/footer.html" %}
+
+    </div>
+    {% endif %}
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}
+
+
+{% endblock javascripts %}
